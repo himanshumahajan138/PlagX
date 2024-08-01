@@ -13,6 +13,13 @@ pip install -r requirements.txt
 ## 🔗 Website Live Link
 Visit this Link for Checking Live PlagX Website [PlagX](https://himanshumahajan138.github.io/lc/web/)
 
+For Website Code Please Do Visit to my Github Repository [lc](https://github.com/himanshumahajan138/lc)
+
+## 📷Screenshots
+
+![Screenshot 2024-07-31 135352](https://github.com/user-attachments/assets/5f3c500b-28c6-47d8-ac12-040aa674d7ec)
+![Screenshot_31-7-2024_13540_himanshumahajan138 github io](https://github.com/user-attachments/assets/998016b6-c459-431d-9026-cec825086cc9)
+
 ## 🚀 Project Overview
 
 ### Step 1: Initialize Constants and Load Environment Variables
