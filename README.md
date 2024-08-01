@@ -17,8 +17,9 @@ For Website Code Please Do Visit to my Github Repository [lc](https://github.com
 
 ## 📷Screenshots
 
-![Screenshot 2024-07-31 135352](https://github.com/user-attachments/assets/5f3c500b-28c6-47d8-ac12-040aa674d7ec)
-![Screenshot_31-7-2024_13540_himanshumahajan138 github io](https://github.com/user-attachments/assets/998016b6-c459-431d-9026-cec825086cc9)
+![Screenshot_1-8-2024_232146_himanshumahajan138 github io](https://github.com/user-attachments/assets/e1453bc1-0d98-493b-b9c1-7e1d1351c2cb)
+![Screenshot_1-8-2024_231619_](https://github.com/user-attachments/assets/5e0dca67-576c-4282-a093-4a0f3beda1b3)
+
 
 ## 🚀 Project Overview
 
