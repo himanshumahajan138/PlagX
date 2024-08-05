@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlagX</title>
+    <link href="styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <h1 class="centered"></span></h1>
+    <div class="flex-container">
+        <div style="float: left;">
+            <button type="button" class="gridjs-button"
+            onClick="location.replace('https://himanshumahajan138.github.io/lc/web')">Home</button>
+        </div>
+    </div>
+    <div></div>
+    <div class="container box-look">
+        <a class="centered" onclick="location.reload()" style="color: black;">
+            <h1 class="centered">🤞Plag<span class="emphasis">X🤞</span></h1>
+        </a><br>
+        <a class="centered" onclick="location.reload()" style="color: black;">
+            <h2 class="centered">🤞LeetCode <span class="emphasis">Plagiarism</span> Checker👀</h2>
+        </a>
+        <h2 class="centered">LeetCode Contest Lists</h2>
+    </div>
+    <div role="complementary" class="gridjs gridjs-container" style="width: 100%;">
+        <div class="gridjs-head">
+            <div class="gridjs-search table-search">
+                <input type="search" id="searchInput" placeholder="🔍 Search..." aria-label="🔍 Search..."
+                    class="gridjs-input gridjs-search-input">
+            </div>
+        </div>
+
+    </div>
+    <div id="table"></div>
+    <br>
+    <br>
+
+    <footer class="box-look">
+        <div class="flex-container" style="justify-content:center;">
+            <div style=" margin-right: 1%; text-align: right;width: 100%;">
+                <a href="https://github.com/himanshumahajan138" target="_blank"><b>Github</b></a><br>
+                <a href="https://www.linkedin.com/in/himanshu138/" target="_blank"><b>Linkedin</b></a><br>
+                <a href="https://himanshumahajan138.github.io/" target="_blank"><b>Visit My Portfolio</b></a><br>
+            </div>
+            <div>
+                <a><b>|</b></a><br>
+                <a><b>|</b></a><br>
+                <a><b>|</b></a><br>
+            </div>
+            <div style="margin-left: 1%; width: 100%;">
+                <a href="https://himanshumahajan138.github.io/lc/web" target="_blank"><b>LeetCode Plagiarism
+                        Checker</b></a><br>
+                <a href="https://himanshumahajan138.github.io/" target="_blank"><b> Made With ❤️ By Himanshu
+                        Mahajan</b></a><br>
+                <a><b>Don't Let Cheaters Rise Above You !!!</b></a><br>
+            </div>
+        </div>
+        <br>
+    </footer>
+    <p style="text-align: center;">If You Want Plagiarism Script or any Query Regarding Report: Drop a Message at <a
+            onclick="window.open('https://www.linkedin.com/in/himanshu138', '_blank').focus();" target="_blank">Himanshu
+            Mahajan</a></p>
+
+    <script src="script.js"></script>
+
+    <script>
+        var griddata;
+        const link_path = "https://himanshumahajan138.github.io/lc/web/report"
+
+        const grid = new gridjs.Grid({
+            columns: [
+                {
+                    id: "contest_name",
+                    name: "Contest Name",
+                    formatter: (cell) => {
+                        const contestName = cell.split('/').pop();
+                        return gridjs.html(`<a href="${cell}" target="_blank">${contestName.replace(/-/g, " ")}</a>`);
+                    }
+                },
+                {
+                    id: "contest_date",
+                    name: "Contest Start Date",
+                    formatter: (cell) => {
+                        return cell;
+                    }
+                },
+                {
+                    id: "question_3",
+                    name: "Question 3",
+                    formatter: (cell, row) => {
+                        const contestName = row.cells[0].data.split('/').pop();
+                        return gridjs.html(`<a href="${link_path}?q=${encodeURIComponent(cell)}&cn=${encodeURIComponent(contestName)}-Question-3" target="_blank">LINK</a>`);
+                    }
+                },
+                {
+                    id: "question_4",
+                    name: "Question 4",
+                    formatter: (cell, row) => {
+                        const contestName = row.cells[0].data.split('/').pop();
+                        return gridjs.html(`<a href="${link_path}?q=${encodeURIComponent(cell)}&cn=${encodeURIComponent(contestName)}-Question-4" target="_blank">LINK</a>`);
+                    }
+                },
+            ],
+            fixedHeader: true,
+            sort: {
+                multiColumn: true
+            },
+            height: '100%',
+            resizable: true,
+            data: async () => {
+                try {
+                    const response = await fetch('https://himanshumahajan138.github.io/lc/contests/data.json');
+                    griddata = await response.json();
+                    // Sort data by contest_date
+                    griddata.data.sort((a, b) => {
+                        const dateA = new Date(a.contest_date);
+                        const dateB = new Date(b.contest_date);
+                        return dateB - dateA; // Sort in ascending order
+                    });
+                    return griddata.data;
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                    return [];
+                }
+            },
+            pagination: {
+                enabled: true,
+                limit: 25,
+                summary: true
+            },
+            className: {
+                table: "table-table table-body",
+                tr: "table-tr",
+                td: "table-td",
+                th: "table-th",
+                search: "table-search",
+                sort: "table-sort",
+                pagination: "table-pagination",
+                paginationButton: "table-pagination-button",
+                paginationButtonNext: "table-pagination-next",
+                paginationButtonCurrent: "table-pagination-current",
+                paginationButtonPrev: "table-pagination-previous",
+                loading: "table-loading",
+            },
+            language: {
+                'pagination': {
+                    'previous': '<',
+                    'next': '>',
+                    'showing': '😃 Displaying',
+                    'results': () => 'Records',
+                    'page': 'Page',
+                    'of': 'of'
+                }
+            }
+        }).render(document.getElementById("table"));
+
+        function filterSearch() {
+            const searchValue = document.getElementById('searchInput').value.toLowerCase();
+
+            if (!searchValue) {
+                grid.updateConfig({ data: griddata.data }).forceRender();
+                return;
+            }
+            const filteredData = griddata.data.filter(row => {
+                const values = Object.values(row).map(value => value.toString().toLowerCase());
+                return values.some(value => value.includes(searchValue));
+            });
+            grid.updateConfig({ data: filteredData }).forceRender();
+        }
+
+        window.onload = function () {
+            document.getElementById('searchInput').addEventListener('input', filterSearch);
+        };
+    </script>
+
+
+</body>
+
+</html>

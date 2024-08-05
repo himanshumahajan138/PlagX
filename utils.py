@@ -43,6 +43,9 @@ def create_directories(contest):
         os.mkdir("plagiarism")
         os.mkdir("plag_report")
         os.mkdir("contests")
+    except:
+        pass
+    try:
         os.mkdir(contest)
         os.mkdir("plag_report/"+contest.split('/')[-1])
     except:
@@ -139,15 +142,15 @@ def make_request(url, headers, retries=10, backoff=1):
             print(f"Unexpected error: {e}")
             raise
 
-def contest_crawler(contest,contest_url,page):
+def contest_crawler(contest,contest_url,start_page,end_page):
     
     Q=questions_information(contest_url)
     # Iterate through pages
-    for pagination in tqdm(range(1, page + 1)):
-        contest_url = f"{contest_url}?pagination={pagination}&region=global"
-        response = make_request(contest_url, choice([headers1, headers2]))
+    for pagination in tqdm(range(start_page, end_page + 1)):
+        contest_api = f"{contest_url}?pagination={pagination}&region=global"
+        response = make_request(contest_api, choice([headers1, headers2]))
 
-        for i in range(25):
+        for i in tqdm(range(25)):
             if response["total_rank"][i]["data_region"] == "CN":
                 continue
 
@@ -175,6 +178,7 @@ def contest_crawler(contest,contest_url,page):
                 with open(codepath4, "w", encoding="utf-8") as code4:
                     try:
                         code4.write(sub4_code["code"])
+
                     except Exception as e:
                         print(f"Failed for {user} in question 4: {e}")
                         
@@ -673,7 +677,7 @@ def upload_json_results(local_folder_path,github_repo,branch,github_token):
     print(latest_files)
     for file_path in latest_files:
         print(file_path)
-        upload_file_to_github(file_path, github_repo, branch, github_token,local_folder_path)
+        upload_file_to_github(file_path, github_repo, branch, github_token)
 
 
 def upload_data_file(contest_name,directory,output_file,contest_data_path,github_repo,branch,github_token,clist_api):

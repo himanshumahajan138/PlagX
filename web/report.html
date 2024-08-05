@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlagX</title>
+  <link href="styles.css" rel="stylesheet" />
+
+</head>
+
+<body>
+  <div class="flex-container">
+    <div style="float: left;">
+      <button type="button" class="gridjs-button"
+        onClick="location.replace('https://himanshumahajan138.github.io/lc/web')">Home</button>
+    </div>
+    <div style="float: right;">
+      <button type="button" class="gridjs-button" onClick="exportGrid()">Export CSV</button>
+    </div>
+  </div>
+
+  <div class="container box-look">
+    <a class="centered" onclick="location.replace('https://himanshumahajan138.github.io/lc/web')" style="color: black;">
+      <h1 class="centered">🤞Plag<span class="emphasis">X🤞</span></h1>
+  </a><br>
+  <a class="centered" onclick="location.reload()" style="color: black;">
+      <h2 class="centered">🤞LeetCode <span class="emphasis">Plagiarism</span> Checker👀</h2>
+  </a>
+    <h2 class="centered" id="contest-name"></h2>
+  </div>
+
+
+
+  <div class="box-look">
+    <div class="note-heading">
+      Note:
+    </div>
+
+    <div class="note-point">
+      <b>●</b> <span class="emphasis">Cheater 1</span> is definitively classified as a <span
+        class="emphasis">Cheater</span>, while <span class="emphasis">Cheater 2</span> may not always fall into this
+      category.
+    </div>
+
+    <div class="note-point">
+      <b>●</b> You can set the <span class="emphasis">threshold value</span> according to your preference, with the
+      <span class="default">default value</span> being <b>70</b>.
+    </div>
+
+    <div class="note-point">
+      <b>●</b> Perform <span class="emphasis">search, sorting</span> based on your specific preferences.
+    </div>
+  </div>
+  <div role="complementary" class="gridjs gridjs-container" style="width: 100%;">
+    <div class="gridjs-head">
+      <div class="gridjs-search table-search" style="float: left;">
+        <label for="threshold" id="threshold-label">Similarity Threshold (%):</label>
+        <input class="gridjs-input gridjs-search-input" id="threshold" type="number" name="threshold" min="50" max="100"
+          value="70" style="width: 17%;">
+        <button type="button" class="gridjs-button" onClick="filterThreshold()">Apply Threshold</button>
+      </div>
+      <div class="gridjs-search table-search">
+        <input type="search" id="searchInput" placeholder="🔍 Search..." aria-label="🔍 Search..."
+          class="gridjs-input gridjs-search-input">
+      </div>
+    </div>
+
+  </div>
+  <div id="table"></div>
+  </br>
+  </br>
+  <footer class="box-look">
+    <div class="flex-container" style="justify-content:center;">
+      <div style=" margin-right: 1%; text-align: right;width: 100%;">
+        <a href="https://github.com/himanshumahajan138" target="_blank"><b>Github</b></a><br>
+        <a href="https://www.linkedin.com/in/himanshu138/" target="_blank"><b>Linkedin</b></a><br>
+        <a href="https://himanshumahajan138.github.io/" target="_blank"><b>Visit My Portfolio</b></a><br>
+      </div>
+      <div>
+        <a><b>|</b></a><br>
+        <a><b>|</b></a><br>
+        <a><b>|</b></a><br>
+      </div>
+      <div style="margin-left: 1%; width: 100%;">
+        <a href="https://himanshumahajan138.github.io/lc/web" target="_blank"><b>LeetCode Plagiarism
+            Checker</b></a><br>
+        <a href="https://himanshumahajan138.github.io/" target="_blank"><b> Made With ❤️ By Himanshu
+            Mahajan</b></a><br>
+        <a><b>Don't Let Cheaters Rise Above You !!!</b></a><br>
+      </div>
+    </div>
+  </footer>
+  <p style="text-align: center;">If You Want Plagiarism Script or any Query Regarding Report: Drop a Message at <a
+      onclick="window.open('https://www.linkedin.com/in/himanshu138', '_blank').focus();" target="_blank">Himanshu
+      Mahajan</a></p>
+
+  <script src="script.js"></script>
+
+  <script>
+    var griddata;
+    const defaultThreshold = 70; // Default threshold value
+
+    function getQueryParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    const query = getQueryParameter('q');
+    const decodedQuery = decodeURIComponent(query);
+    const fetchUrl = `https://himanshumahajan138.github.io/lc/${decodedQuery}`;
+
+    const query2 = getQueryParameter('cn');
+    const decodedQuery2 = decodeURIComponent(query2);
+    document.getElementById('contest-name').textContent = "LeetCode " + decodedQuery2.replace(/-/g, " ")
+
+    const grid = new gridjs.Grid({
+      columns: [
+        { id: "similarity_percentage", name: "Similarity (%)", formatter: (cell) => parseInt(cell), sort: { compare: (a, b) => parseInt(a) - parseInt(b) } },
+        { id: "cheater1_rank", name: "Cheater 1 Rank", formatter: (cell) => parseInt(cell), sort: { compare: (a, b) => parseInt(a) - parseInt(b) } },
+        { id: "cheater1_username", name: "Cheater 1 Username", formatter: (cell) => gridjs.html(`<a href="${cell}" target="_blank">${cell.split('/').pop()}</a>`) },
+        { id: "cheater1_submission_id", name: "Cheater 1 Submission ID", formatter: (cell) => gridjs.html(`<a href="${cell}" target="_blank">${cell.split('/').pop()}</a>`) },
+        { id: "cheater2_rank", name: "Cheater 2 Rank", formatter: (cell) => parseInt(cell), sort: { compare: (a, b) => parseInt(a) - parseInt(b) } },
+        { id: "cheater2_username", name: "Cheater 2 Username", formatter: (cell) => gridjs.html(`<a href="${cell}" target="_blank">${cell.split('/').pop()}</a>`) },
+        { id: "cheater2_submission_id", name: "Cheater 2 Submission ID", formatter: (cell) => gridjs.html(`<a href="${cell}" target="_blank">${cell.split('/').pop()}</a>`) },
+      ],
+      fixedHeader: true,
+      sort: {
+        multiColumn: true
+      },
+      height: '100%',
+      resizable: true,
+      data: async () => {
+        try {
+          const response = await fetch(fetchUrl);
+          griddata = await response.json();
+          sortDataBySimilarityPercentage(griddata.data); // Sort the data
+          filterThreshold();
+          return griddata.data;
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          return [];
+        }
+      },
+      pagination: {
+        enabled: true,
+        limit: 25,
+        summary: true
+      },
+      className: {
+        table: "table-table table-body",
+        tr: "table-tr",
+        td: "table-td",
+        th: "table-th",
+        search: "table-search",
+        sort: "table-sort",
+        pagination: "table-pagination",
+        paginationButton: "table-pagination-button",
+        paginationButtonNext: "table-pagination-next",
+        paginationButtonCurrent: "table-pagination-current",
+        paginationButtonPrev: "table-pagination-previous",
+        loading: "table-loading",
+      },
+      language: {
+        'pagination': {
+          'previous': '<',
+          'next': '>',
+          'showing': '😃 Displaying',
+          'results': () => 'Records',
+          'page': 'Page',
+          'of': 'of'
+        }
+      }
+    }).render(document.getElementById("table"));
+
+    function exportGrid() {
+      downloadBlob(griddata.data, 'export.csv', 'text/csv;charset=utf-8;');
+    }
+
+    function convertToCSV(arr) {
+      const array = [Object.keys(arr[0])].concat(arr);
+      return array.map(it => Object.values(it).toString()).join('\n');
+    }
+
+    function downloadBlob(content, filename, contentType) {
+      var csvContent = convertToCSV(content);
+      var blob = new Blob([csvContent], { type: contentType });
+      var url = URL.createObjectURL(blob);
+
+      var pom = document.createElement('a');
+      pom.href = url;
+      pom.setAttribute('download', filename);
+      pom.click();
+    }
+
+    function filterThreshold() {
+      const thresholdInput = document.getElementById('threshold');
+      const threshold = parseInt(thresholdInput.value);
+
+      if (threshold < 50 || threshold > 100) {
+        alert("Threshold must be between 50 and 100.");
+        return;
+      }
+
+      const filteredData = griddata.data.filter(row => parseInt(row.similarity_percentage) >= threshold);
+      grid.updateConfig({ data: filteredData }).forceRender();
+    }
+
+    function filterSearch() {
+      const searchValue = document.getElementById('searchInput').value.toLowerCase();
+
+      if (!searchValue) {
+        grid.updateConfig({ data: griddata.data }).forceRender();
+        return;
+      }
+
+      const filteredData = griddata.data.filter(row => {
+        const values = Object.values(row).map(value => value.toString().toLowerCase());
+        return values.some(value => value.includes(searchValue));
+      });
+      grid.updateConfig({ data: filteredData }).forceRender();
+    }
+
+    function sortDataBySimilarityPercentage(data) {
+      data.sort((a, b) => parseInt(b.similarity_percentage) - parseInt(a.similarity_percentage));
+    }
+
+    window.onload = function () {
+      document.getElementById('searchInput').addEventListener('input', filterSearch);
+    };
+  </script>
+
+
+</body>
+
+</html>
