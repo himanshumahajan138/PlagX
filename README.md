@@ -1,6 +1,6 @@
 # PlagX 📜🚫
 
-PlagX is an automated tool designed to detect potential plagiarism in LeetCode coding contests.  It crawls contest data, processes user submissions, generates comprehensive reports, and uploads results to GitHub. Features secure handling of environment variables and seamless integration with GitHub for efficient data management.
+PlagX is an automated plagiarism detection tool specifically designed for LeetCode coding contests. This tool crawls through contest data, processes user submissions, and generates detailed plagiarism reports, which it then uploads to GitHub. It ensures secure handling of environment variables and offers seamless GitHub integration for efficient data management and tracking.
 
 ## 📋 Pre-Requirements
 
@@ -57,11 +57,11 @@ Convert the final reports into JSON format for easier handling.
 
 ### Step 9: Upload JSON Reports to GitHub
 
-Upload the JSON reports to the specified GitHub repository.
+Push the JSON reports to GitHub to make them accessible and maintainable within a versioned repository.
 
 ### Step 10: Upload Data File to GitHub
 
-Upload the data file to GitHub for record-keeping and further analysis.
+Upload key data files to GitHub to ensure record-keeping and facilitate future data analysis.
 
 ## 🌟 Environment Variables
 
@@ -106,7 +106,7 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 
 ## 📬 Contact
 
-For any questions or inquiries, please contact [Himanshu Mahajan](https://www.linkedin.com/in/himanshu138).
+For questions or feedback, reach out to [Himanshu Mahajan](https://www.linkedin.com/in/himanshu138).
 
 ## 🔖 Tags
 
